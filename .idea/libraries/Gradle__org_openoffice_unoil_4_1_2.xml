@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.openoffice:unoil:4.1.2">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.openoffice/unoil/4.1.2/48921ffdfdf14f47d91d90c5e7c9ec6138941340/unoil-4.1.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.openoffice/unoil/4.1.2/681e820c498e3b7bdbd8ad961885eb03e3bd868c/unoil-4.1.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.openoffice:juh:4.1.2">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.openoffice/juh/4.1.2/bbd1b7b49879b5ca34b50053a5929755bcab5063/juh-4.1.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.openoffice/juh/4.1.2/b3f3a54bddf6a915e5549254d4b2918dc13d7fb3/juh-4.1.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

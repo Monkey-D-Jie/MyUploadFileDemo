@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <!--配置注解扫描 -->
+    <context:annotation-config/>
+    <!--对bean中的属性值进行外在化管理 -->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <array>
+                <value>classpath:redis.properties</value>
+                <value>classpath:common.properties</value>
+            </array>
+        </property>
+    </bean>
+    <!--mysql.master数据源配置，tomcat数据库连接池-->
+    <bean id="dynamicLoadBean" class="com.sc.jf.is.dao.DynamicLoadBean"/>
+    <!--配置公共配置-->
+    <bean id="commonBean" class="com.sc.jf.is.service.CommonBean"/>
+    <bean id="commonErmBean" class="com.sc.jf.is.entities.commons.CommonErmBean"/>
+    <!--配置初始化加载,单元测试加上，项目启动的时候去掉-->
+    <bean class="com.sc.jf.is.service.InstantiationTracingBeanPostProcessor"/>
+    <!--云配置文件注入-->
+    <bean id="machineBean" class="com.sc.jf.is.service.MachineBean"/>
+    <bean id="machineUtil" class="com.sc.jf.is.service.MachineUtil"/>
+    <!--采用@Transaction注解方式使用事务transaction-manager：指定事务管理器-->
+    <tx:annotation-driven/>
+    <!--注解方式：使用spring的事务管理器-->
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!-- 注入数据源 -->
+        <property name="dataSource" ref="dynamicLoadBean"/>
+    </bean>
+    <!--配置sqlSessionFactory-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dynamicLoadBean"/>
+        <!--引入纳入管理的xml文件-->
+        <property name="typeAliasesPackage" value="com.sc.jf.is.entities"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <property name="mapperLocations" value="classpath:mapper/**/**/*.xml"/>
+    </bean>
+    <!--通过扫描的模式，扫描在mybatisDao目录下的所有接口-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.sc.jf.is.interfaces.mapper"/>
+    </bean>
+</beans>

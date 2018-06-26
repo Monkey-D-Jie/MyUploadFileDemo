@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.openoffice:jurt:4.1.2">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.openoffice/jurt/4.1.2/49fc3e3808c2a6c97831824794d3b1313c12e406/jurt-4.1.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.openoffice/jurt/4.1.2/b22ab40238725756adf9e5fc1742cf96b604028c/jurt-4.1.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

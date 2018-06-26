@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.jodconverter:jodconverter-core:4.2.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jodconverter/jodconverter-core/4.2.0/3a93b94208034bbdec1131f6f71f45b37cf34bee/jodconverter-core-4.2.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jodconverter/jodconverter-core/4.2.0/49e13c2560e230ea8760467739ddb81bb061709e/jodconverter-core-4.2.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

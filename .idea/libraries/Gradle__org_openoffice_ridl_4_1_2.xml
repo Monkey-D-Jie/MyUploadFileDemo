@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.openoffice:ridl:4.1.2">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.openoffice/ridl/4.1.2/2b3f48a310c7bdc1526146c0e2bd97c4ce3b8b85/ridl-4.1.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.openoffice/ridl/4.1.2/a138e33251e5a2dd7ccfe4c957b1f987dce7740a/ridl-4.1.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
