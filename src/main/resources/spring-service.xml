@@ -7,9 +7,9 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
     <!--扫描业务层实现-->
-    <context:component-scan base-package="com.sc.jf.is.service"/>
+    <context:component-scan base-package="com.jf.myDemo.service"/>
     <!--反向实现查找Bean-->
-    <bean class="com.sc.jf.is.service.SpringContextUtil" lazy-init="false"/>
+    <bean class="com.jf.myDemo.common.utilities.spring.SpringContextUtil" lazy-init="false"/>
    <!-- <task:scheduled-tasks scheduler="taskScheduler">
         &lt;!&ndash;将过期的直播课程变成录播可发布课程或者空课堂&ndash;&gt;
         <task:scheduled ref="resourceCurTaskService" method="modifyResCurOfTypeTask" cron="0 */5 * * * ?"/>

@@ -1,6 +1,6 @@
 package com.jf.myDemo.convert.converterUtils;
 
-import com.jf.myDemo.common.OfficeHomeUtil;
+import com.jf.myDemo.common.utilities.office.OfficeHomeUtil;
 import com.jf.myDemo.common.utilities.txt.WriteTxtKit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

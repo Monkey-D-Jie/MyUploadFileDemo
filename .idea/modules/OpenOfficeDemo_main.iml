@@ -47,6 +47,7 @@
     <orderEntry type="library" name="Gradle: javax.servlet.jsp:jsp-api:2.2" level="project" />
     <orderEntry type="library" name="Gradle: commons-fileupload:commons-fileupload:1.2.1" level="project" />
     <orderEntry type="library" name="Gradle: jstl:jstl:1.2" level="project" />
+    <orderEntry type="library" name="Gradle: commons-net:commons-net:3.3" level="project" />
     <orderEntry type="library" name="Gradle: org.jodconverter:jodconverter-core:4.2.0" level="project" />
     <orderEntry type="library" name="Gradle: org.openoffice:juh:4.1.2" level="project" />
     <orderEntry type="library" name="Gradle: org.openoffice:jurt:4.1.2" level="project" />

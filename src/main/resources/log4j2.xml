@@ -4,7 +4,7 @@
     <!--定义下面的引用名-->
     <properties>
         <!--配置日志文件输出目录-->
-        <property name="LOG_HOME">F:/myIdeaWorkSpace/OpenOfficeDemo2/OpenOfficeDemo/logs</property>
+        <property name="LOG_HOME">F:/myIdeaWorkSpace/MyUploadFileDemo/logs</property>
         <!--输出文件名称-->
         <property name="FILE_NAME_DEBUG">OpenOfficeDemo-debug</property>
         <property name="FILE_NAME_INFO">OpenOfficeDemo-info</property>

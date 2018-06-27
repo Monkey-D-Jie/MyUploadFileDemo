@@ -37,6 +37,10 @@ ext {
      * jstl
      */
     jstlVersion = '1.2'
+    /**
+     * FTP Client
+     */
+    conmmonNetversion = '3.3'
 }
 repositories {
     mavenCentral()
@@ -71,7 +75,11 @@ dependencies {
             "javax.servlet.jsp:jsp-api:$servletJspApi",
             "commons-fileupload:commons-fileupload:$fileuploadVersion",
             //jstl--->用于在jsp页面引入‘c’标签,这个jstl是【Home » jstl » jstl » 1.2】
-            "jstl:jstl:$jstlVersion"
+            "jstl:jstl:$jstlVersion",
+            //引入 ftpClient 模拟服务器上传和下载文件
+            "commons-net:commons-net:$conmmonNetversion"
+
+
 
     )
 }

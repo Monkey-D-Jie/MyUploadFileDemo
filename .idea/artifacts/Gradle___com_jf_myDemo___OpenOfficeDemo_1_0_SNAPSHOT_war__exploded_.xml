@@ -17,8 +17,12 @@
           <element id="dir-copy" path="$PROJECT_DIR$/build/resources/main" />
         </element>
         <element id="directory" name="lib">
+          <element id="file-copy" path="$PROJECT_DIR$/libs/jodconverter-core-3.0-alfresco-patched-20141024.jar" />
+          <element id="library" level="project" name="Gradle: org.jodconverter:jodconverter-local:4.2.0" />
+          <element id="library" level="project" name="Gradle: org.apache.logging.log4j:log4j-api:2.6.2" />
+          <element id="library" level="project" name="Gradle: org.apache.logging.log4j:log4j-core:2.6.2" />
           <element id="library" level="project" name="Gradle: org.apache.logging.log4j:log4j-web:2.6.2" />
-          <element id="library" level="project" name="Gradle: org.jodconverter:jodconverter-core:4.2.0" />
+          <element id="library" level="project" name="Gradle: org.apache.logging.log4j:log4j-slf4j-impl:2.6.2" />
           <element id="library" level="project" name="Gradle: org.slf4j:slf4j-api:1.7.25" />
           <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.7.3" />
           <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.7.3" />
@@ -28,9 +32,10 @@
           <element id="library" level="project" name="Gradle: org.springframework:spring-webmvc:4.3.14.RELEASE" />
           <element id="library" level="project" name="Gradle: org.springframework:spring-test:4.3.14.RELEASE" />
           <element id="library" level="project" name="Gradle: javax.servlet:javax.servlet-api:3.1.0" />
-          <element id="library" level="project" name="Gradle: org.apache.logging.log4j:log4j-core:2.6.2" />
+          <element id="library" level="project" name="Gradle: javax.servlet.jsp:jsp-api:2.2" />
           <element id="library" level="project" name="Gradle: commons-fileupload:commons-fileupload:1.2.1" />
-          <element id="library" level="project" name="Gradle: org.apache.logging.log4j:log4j-slf4j-impl:2.6.2" />
+          <element id="library" level="project" name="Gradle: jstl:jstl:1.2" />
+          <element id="library" level="project" name="Gradle: org.jodconverter:jodconverter-core:4.2.0" />
           <element id="library" level="project" name="Gradle: org.openoffice:juh:4.1.2" />
           <element id="library" level="project" name="Gradle: org.openoffice:jurt:4.1.2" />
           <element id="library" level="project" name="Gradle: org.openoffice:ridl:4.1.2" />
@@ -42,12 +47,8 @@
           <element id="library" level="project" name="Gradle: commons-io:commons-io:2.6" />
           <element id="library" level="project" name="Gradle: org.apache.commons:commons-lang3:3.7" />
           <element id="library" level="project" name="Gradle: com.google.code.gson:gson:2.8.2" />
-          <element id="file-copy" path="$PROJECT_DIR$/libs/jodconverter-core-3.0-alfresco-patched-20141024.jar" />
-          <element id="library" level="project" name="Gradle: org.jodconverter:jodconverter-local:4.2.0" />
-          <element id="library" level="project" name="Gradle: org.apache.logging.log4j:log4j-api:2.6.2" />
-          <element id="library" level="project" name="Gradle: javax.servlet.jsp:jsp-api:2.2" />
           <element id="library" level="project" name="Gradle: org.springframework:spring-beans:4.3.14.RELEASE" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/jstl/jstl/1.2/74aca283cd4f4b4f3e425f5820cda58f44409547/jstl-1.2.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-net/commons-net/3.3/cd0d5510908225f76c5fe5a3f1df4fa44866f81e/commons-net-3.3.jar" />
         </element>
       </element>
     </root>

@@ -37,7 +37,7 @@ public class MyPageFilter implements Filter {
 
     @Override
     public void doFilter(OfficeContext context, XComponent document, FilterChain chain) throws Exception {
-        // Querying for the interface XTextDocument (text interface) on the XComponent.
+        // Querying for the interfaces XTextDocument (text interfaces) on the XComponent.
         final XTextDocument docText = UnoRuntime.queryInterface(XTextDocument.class, document);
 
         // We need both the text cursor and the view cursor in order
@@ -50,7 +50,7 @@ public class MyPageFilter implements Filter {
         // Reset both cursors to the beginning of the document
         textCursor.gotoStart(false);
         viewCursor.gotoStart(false);
-        // Querying for the interface XPageCursor on the view cursor.
+        // Querying for the interfaces XPageCursor on the view cursor.
         final XPageCursor pageCursor = UnoRuntime.queryInterface(XPageCursor.class, viewCursor);
 
         // Jump to the page to select (first page is 1) and move the
