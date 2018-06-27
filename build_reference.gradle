@@ -1,0 +1,151 @@
+/**
+ * 项目组
+ */
+group = 'JF_IS'
+/**
+ * 版本号
+ */
+version = '1.0'
+/**
+ * 所有项目依赖
+ */
+allprojects {
+    /**
+     * jar包插件
+     */
+    apply plugin: 'java'
+    /**
+     * eclipse插件
+     */
+    apply plugin: 'eclipse'
+    /**
+     * idea插件
+     */
+    apply plugin: 'idea'
+    /**
+     * 指定编译编译.java文件的jdk版本
+     */
+    sourceCompatibility = 1.6
+    /**
+     * 确保class文件与targetCompatibility指定版本，或者更新的java虚拟机兼容
+     */
+    targetCompatibility = 1.6
+    /**
+     * 解决包含中文的源码编译时出现乱码的问题
+     */
+    [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+    /**
+     * 版本号
+     */
+    ext {
+        /*spring依赖包*/
+        springVersion = '4.3.7.RELEASE'
+        /*log4j2日志包*/
+        log4j2Version = '2.6.2'
+        /*slf4j日志转换包*/
+        slf4jVersion = '1.7.25'
+        /*junit测试包*/
+        junitVersion = '4.12'
+        /*tomcat连接池包*/
+        tomcatJdbcVersion = '8.5.5'
+        /*mysql驱动包*/
+        mysqlVersion = '5.1.41'
+        /*servlet编译包*/
+        servletApiVersion = '3.1.0'
+        /*pinyin转换包*/
+        pinyin4jVersion = '2.5.1'
+        /*jackson处理包*/
+        jacksonVersion = '2.8.7'
+        /*commons编码包*/
+        commonsCodecVersion = '1.10'
+        /*poi处理包*/
+        poiVersion = '3.15'
+        /*HTTP客户端包*/
+        commonsHttpVersion = '3.1'
+        /*WS接口CXF包*/
+        cxfVersion = '3.1.10'
+        /*jStl包*/
+        jstlVersion = '1.2'
+        /*jStl-api;jsp-api包*/
+        jspApiVersion = '2.2'
+        jstlApiVersion = '1.2.1'
+        /*httpComponents远程包*/
+        httpclientVersion = '4.5.3'
+        httpcoreVersion = '4.4.6'
+        /*fileupload文件上传包*/
+        commonsFileuploadVersion = '1.3.2'
+        /*webSocket包*/
+        websocketVersion = '1.1'
+        /*gson包*/
+        gsonVersion = '2.8.0'
+        /*mybatis;mybatis-Spring;mybatis-ehcache包*/
+        mybatisVersion = '3.4.2'
+        mybatisSpringVersion = '1.3.1'
+        mybatisEhcacheVersion = '1.0.0'
+        /*aspectJrt切面包*/
+        aspectJrtVersion = '1.8.10'
+        /*redis;redis-spring包---原来的*/
+        jedisVsersion = '2.9.0'
+        springRedisVersion = '1.8.1.RELEASE'
+        /*redis包---当前redis在用的*/
+        springDataRedis = '1.6.0.RELEASE'
+        jedis = '2.7.3'
+        /*mongodb-spring;mongo-driver包*/
+        mongoDriverVersion = '3.4.2'
+        springMongodbVersion = '1.10.1.RELEASE'
+        /*javax-mail包*/
+        mainlVersion = '1.4.7'
+        /*hibernate-validator包*/
+        hibernateValidatorVersion = '5.4.1.Final'
+        /*javax-validation包*/
+        javaxValidationVersion = '1.1.0.Final'
+        /*memcache包*/
+        memcacheVersion = '2.3.1'
+        /*commons-dbcp包*/
+        commonsDbcpVersion = '1.4'
+        /*fastjson包*/
+        fastjsonVersion = '1.2.31'
+        /*quartz包*/
+        quartzVersion = '2.2.3'
+        /*dom4j包*/
+        dom4jVersion = '1.6.1'
+        /*openoffice包*/
+        openofficeVersion = '4.1.2'
+        /* mongodb包 */
+        springDataMongodbVersion = '1.10.1.RELEASE'
+        mongoJavaDriverVersion = '3.5.0'
+        /*javamelody*/
+        javamelody='1.70.0'
+        /*jodconverter*/
+        jodconverter='4.1.0'
+    }
+}
+subprojects {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+    dependencies {
+        compile(
+                "org.apache.logging.log4j:log4j-api:$log4j2Version",
+                "org.apache.logging.log4j:log4j-core:$log4j2Version",
+                "org.apache.logging.log4j:log4j-web:$log4j2Version",
+                "org.apache.logging.log4j:log4j-slf4j-impl:$log4j2Version",
+                "org.slf4j:slf4j-api:$slf4jVersion"
+        )
+        testCompile(
+                "org.springframework:spring-test:$springVersion",
+                "junit:junit:$junitVersion"
+        )
+        compile fileTree(dir: 'libs', include: ['**/*.jar'])
+    }
+    compileJava {
+        options.fork = true
+        options.forkOptions.executable = "javac"
+        options.compilerArgs << "-XDignore.symbol.file"
+    }
+    task createJavaProject << {
+        sourceSets*.java.srcDirs*.each { it.mkdirs() }
+        sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+    }
+}

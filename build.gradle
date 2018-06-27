@@ -3,8 +3,12 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 apply plugin: 'war'
-
-sourceCompatibility = 1.5
+/**
+ * 指定编译的jdk版本，不然每次都会出现：
+ * 重新gradle build后，又得去设置不同的compiler 和 language level
+ */
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 ext {
 //    jodconverterVersion = '4.1.0'
     jodconverterVersion = '4.2.0'
@@ -20,11 +24,27 @@ ext {
      *
      */
     springVersion = '4.3.14.RELEASE'
+    /**
+     * Servlet
+     */
+    servletApi = '3.1.0'
+    servletJspApi = '2.2'
+    /**
+     * fileUpload
+     */
+    fileuploadVersion = '1.2.1'
+    /**
+     * jstl
+     */
+    jstlVersion = '1.2'
 }
 repositories {
     mavenCentral()
 }
-
+//compileOptions {
+//    sourceCompatibility JavaVersion.VERSION_1_8
+//    targetCompatibility JavaVersion.VERSION_1_8
+//}
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
     compile(
@@ -45,7 +65,13 @@ dependencies {
             "org.springframework:spring-beans: $springVersion",
             "org.springframework:spring-web:$springVersion",
             "org.springframework:spring-webmvc:$springVersion",
-            "org.springframework:spring-test:$springVersion"
+            "org.springframework:spring-test:$springVersion",
+            //servelet-->引入后，在jsp页面使用这种代码request.getContextPath()
+            "javax.servlet:javax.servlet-api:$servletApi",
+            "javax.servlet.jsp:jsp-api:$servletJspApi",
+            "commons-fileupload:commons-fileupload:$fileuploadVersion",
+            //jstl--->用于在jsp页面引入‘c’标签,这个jstl是【Home » jstl » jstl » 1.2】
+            "jstl:jstl:$jstlVersion"
 
     )
 }
