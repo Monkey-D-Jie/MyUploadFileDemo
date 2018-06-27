@@ -9,4 +9,10 @@
 3.JAVA中使用FTPClient上传下载 - CSDN博客
   https://blog.csdn.net/hbcui1984/article/details/2720204
 
+4.根据文件头获取文件的真实类型
+JAVA获取真实的文件类型 - CSDN博客
+https://blog.csdn.net/cl799667803/article/details/72730841
+
+5.java验证文件格式工具类（获取文件真实格式） - CSDN博客
+  https://blog.csdn.net/fengqilove520/article/details/53303931
 -----------分----割----线-----------------------

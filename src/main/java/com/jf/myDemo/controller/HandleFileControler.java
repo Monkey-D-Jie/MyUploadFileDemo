@@ -36,8 +36,8 @@ public class HandleFileControler {
     @RequestMapping("/uploadFile")
     public void uploadFile(@RequestParam("file") CommonsMultipartFile file, HttpServletResponse response){
         String fileName = file.getOriginalFilename();
-        this.LOGGER.info("-------上传文件的信息"+fileName+",contentType:"+file.getContentType());
         try {
+            this.LOGGER.info("-------上传文件的信息"+fileName+",contentType:"+file.getContentType()+"文件的真实类型为:"+FileUtils.getFileType(file.getInputStream())+"--------");
             String id = java.util.UUID.randomUUID().toString();
             FileUtils.uploadFTPForIns(file,id);
 
