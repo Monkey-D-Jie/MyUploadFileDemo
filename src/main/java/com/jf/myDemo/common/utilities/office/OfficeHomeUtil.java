@@ -37,4 +37,18 @@ public class OfficeHomeUtil {
         }
         return null;
     }
+
+    public static String getOpenOfficeHome() {
+        String osName = System.getProperty("os.name");
+        if (Pattern.matches("Linux.*", osName)) {
+            //获取linux系统下libreoffice主程序的位置
+            logger.info("获取Linux系统LibreOffice路径");
+            return "/opt/openOffice 4.1.5/program/soffice";
+        } else if (Pattern.matches("Windows.*", osName)) {
+            //获取windows系统下libreoffice主程序的位置
+            logger.info("获取windows系统LibreOffice路径");
+            return "D:/Software/OpenOffice/OpenOffice4.1.5_Install";
+        }
+        return null;
+    }
 }

@@ -15,4 +15,10 @@ https://blog.csdn.net/cl799667803/article/details/72730841
 
 5.java验证文件格式工具类（获取文件真实格式） - CSDN博客
   https://blog.csdn.net/fengqilove520/article/details/53303931
+
+6.js文件中引用其他js文件 - CSDN博客
+  https://blog.csdn.net/Inuyasha1121/article/details/51071803
+  ---在 外部js文件中引入layer.msg时用到的。
+  这个时候，如果不把layer作一个全局声明(即 jsp页面下方的layer声明代码)，
+  会出现引用不到的情况。
 -----------分----割----线-----------------------

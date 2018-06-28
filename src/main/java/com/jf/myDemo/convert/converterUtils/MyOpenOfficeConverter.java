@@ -1,13 +1,17 @@
 package com.jf.myDemo.convert.converterUtils;
 
+import com.jf.myDemo.common.utilities.office.OfficeHomeUtil;
 import com.jf.myDemo.common.utilities.txt.WriteTxtKit;
 import com.jf.myDemo.convert.converfileter.PageCounterFilter;
 import org.jodconverter.JodConverter;
 import org.jodconverter.LocalConverter;
 import org.jodconverter.filter.text.PageSelectorFilter;
 import org.jodconverter.office.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.DataFormatException;
@@ -21,11 +25,22 @@ import java.util.zip.DataFormatException;
  */
 public class MyOpenOfficeConverter {
 
-//    private static String officeHome = "D:/OpenOffice/of4";
+    //    private static String officeHome = "D:/OpenOffice/of4";
     private static String officeHome = "D:\\Software\\OpenOffice\\OpenOffice4.1.5_Install";
     //    将转码工具变成LibreOffice，方法沿用原来的---》并不能沿用
 //    private static String officeHome = "D:/Software/LibreOffice";
 
+    /** logger */
+    private static Logger LOGGER = LoggerFactory.getLogger(MyOpenOfficeConverter.class.getName());
+
+
+    public static LocalOfficeManager getLocalOfficeManager() {
+        return localOfficeManager;
+    }
+
+    private static volatile LocalOfficeManager localOfficeManager = null;
+
+    private static final int[] openOfficePort = {8001, 8002, 8003};
 
     public static void convertFile(File inputFile, File pdfFile) throws DataFormatException {
         // Create an office manager using the default configuration.
@@ -40,8 +55,8 @@ public class MyOpenOfficeConverter {
             String fileName = inputFile.getName();
             if (fileName.substring(fileName.lastIndexOf(".")).equalsIgnoreCase(".txt")) {
                 try {
-                    String txtContent = WriteTxtKit.getFileContentFromCharset(inputFile,"GBK");
-                    WriteTxtKit.saveFile2Charset(inputFile,"UTF-8",txtContent);
+                    String txtContent = WriteTxtKit.getFileContentFromCharset(inputFile, "GBK");
+                    WriteTxtKit.saveFile2Charset(inputFile, "UTF-8", txtContent);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -53,8 +68,48 @@ public class MyOpenOfficeConverter {
                     .execute();
         } catch (OfficeException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             LocalOfficeUtils.stopQuietly(officeManager);
+        }
+    }
+
+
+    public static void convertFileThread(File inputFile, File outFile) throws DataFormatException {
+        try {
+            synchronized (MyOpenOfficeConverter.class) {
+                if (localOfficeManager == null) {
+                    localOfficeManager = OfficeSingletonUtil.getOpenOfficeSingleton(OfficeHomeUtil.getOpenOfficeHome(), openOfficePort);
+                    if (localOfficeManager != null && !localOfficeManager.isRunning()) {
+                        localOfficeManager.start();
+                        LOGGER.info("openOffice*******************localOfficeManager对象开启成功，只有一次******************openOffice");
+                    }
+                }
+            }
+            // Convert
+            LOGGER.info(new Date().toString() +"---->>"+Thread.currentThread().getName()+ "---openOffice----------开始转换-----------openOffice");
+            String fileName = inputFile.getName();
+            File tempFile = null;
+            if (fileName.substring(fileName.lastIndexOf(".")).equalsIgnoreCase(".txt")) {
+                String txtContent = WriteTxtKit.getFileContentFromCharset(inputFile, "GBK");
+                tempFile = new File("E:\\Users\\WordFiles\\temp\\"+fileName);
+                tempFile.createNewFile();
+                WriteTxtKit.saveFile2Charset(tempFile, "UTF-8", txtContent);
+                JodConverter
+                        .convert(tempFile)
+                        .to(outFile)
+                        .execute();
+                tempFile.delete();
+            }else{
+                JodConverter
+                        .convert(inputFile)
+                        .to(outFile)
+                        .execute();
+            }
+            LOGGER.info(new Date().toString()+"---->>"+Thread.currentThread().getName()+ "---openOffice----------开始转换-----------openOffice");
+        } catch (OfficeException e1) {
+            e1.printStackTrace();
+        } catch (Exception e1) {
+            e1.printStackTrace();
         }
     }
 

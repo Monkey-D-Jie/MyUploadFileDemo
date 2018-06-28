@@ -22,15 +22,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>MyUploadFileDemo</title>
     <!-- 引入css样式 -->
-    <link rel="stylesheet" href="static/js/layui/css/layui.css">
-    <!-- 引入layui的javasrcipt的支持 -->
-    <script type="text/javascript" src="static/js/layui/layui.js"></script>
+    <link rel="stylesheet" href="static/js/layui/css/layui.css" />
+    <!-- 引入mLoading的 css 样式 ----》就是因为没有把这个引入，所以没有动画效果-->
+    <link rel="stylesheet" href="static/js/jquery.mloading.css" />
+
     <!-- 引入jquery 的支持 -->
     <script type="text/javascript" src="static/js/jquery/jquery-3.1.1.min.js"></script>
     <!-- 引入mloading 的支持 -->
     <script type="text/javascript" src="static/js/jquery.mloading.js"></script>
-    <script type="text/javascript" src="static/js/jquery.mloading.css"></script>
-
+    <!-- 引入layui的javasrcipt的支持 -->
+   <script type="text/javascript" src="static/js/layui/layui.all.js"></script>
 </head>
 <body>
 <div style="width: 500px;height: auto;margin: 3px 3px 3px 3px;">
@@ -94,4 +95,14 @@
 </body>
 <!-- 引入自定义的js -->
 <script type="text/javascript" src="static/js/my.js"></script>
+<script>
+    /*全局配置layui*/
+    layui.config({
+        dir: 'static/js/layui/', //layui.js 所在路径（注意，如果是script单独引入layui.js，无需设定该参数。），一般情况下可以无视
+        version: false, //一般用于更新组件缓存，默认不开启。设为true即让浏览器不缓存。也可以设为一个固定的值，如：201610
+        debug: false, //用于开启调试模式，默认false，如果设为true，则JS模块的节点会保留在页面
+        base: '' //设定扩展的Layui组件的所在目录，一般用于外部组件扩展
+    });
+</script>
 </html>
+

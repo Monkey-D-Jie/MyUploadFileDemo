@@ -6,11 +6,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.artofsolving.jodconverter.OfficeDocumentConverter;
 import org.artofsolving.jodconverter.office.DefaultOfficeManagerConfiguration;
+import org.artofsolving.jodconverter.office.OfficeException;
 import org.artofsolving.jodconverter.office.OfficeManager;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.zip.DataFormatException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,7 +24,17 @@ import java.util.Date;
  */
 
 public class MyLibreOfficeConverter {
+
+
     private static Logger logger = LogManager.getLogger(MyLibreOfficeConverter.class);
+
+    public static OfficeManager getOfficeManager() {
+        return officeManager;
+    }
+
+    private static volatile OfficeManager officeManager = null;
+
+    private static final int[] libreOfficePort = {8004, 8005, 8006};
 
     public static void convertFile(File inputfile, File outputfile) {
         String LibreOffice_HOME = OfficeHomeUtil.getLibreOfficeHome();
@@ -63,7 +75,40 @@ public class MyLibreOfficeConverter {
             officeManager.stop();
         }
 
-
         logger.info(new Date().toString() + "----转换结束....");
+    }
+    public static void convertFileThread(File inputFile, File outFile) throws DataFormatException {
+        try {
+            synchronized (MyLibreOfficeConverter.class) {
+                if (officeManager == null) {
+                    officeManager = OfficeSingletonUtil.getLibreOfficeSingleton(OfficeHomeUtil.getLibreOfficeHome(), libreOfficePort);
+                    if (officeManager != null && !officeManager.isRunning()) {
+                        officeManager.start();
+                        logger.info("libreOffice*******************officeManager对象开启成功，只有一次******************libreOffice");
+                    }
+                }
+            }
+            // Convert
+            logger.info(new Date().toString()+"---->>"+Thread.currentThread().getName()+"---libreOffice----------开始转换-----------libreOffice");
+            OfficeDocumentConverter converter = new OfficeDocumentConverter(officeManager);
+            converter.getFormatRegistry();
+            String fileName = inputFile.getName();
+            File file = null;
+            if (fileName.substring(fileName.lastIndexOf(".")).equalsIgnoreCase(".txt")) {
+                String txtContent = WriteTxtKit.getFileContentFromCharset(inputFile, "GBK");
+                file = new File("E:\\Users\\WordFiles\\temp\\"+fileName);
+                file.createNewFile();
+                WriteTxtKit.saveFile2Charset(file, "UTF-8", txtContent);
+                converter.convert(file, outFile);
+                file.delete();
+            }else{
+                converter.convert(inputFile, outFile);
+            }
+            logger.info(new Date().toString() +"---->>"+Thread.currentThread().getName()+  "---libreOffice----------转换结束-----------libreOffice");
+        } catch (OfficeException e1) {
+            e1.printStackTrace();
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
     }
 }

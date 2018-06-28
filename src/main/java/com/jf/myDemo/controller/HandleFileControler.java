@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -33,7 +34,7 @@ public class HandleFileControler {
     @Autowired
     private IFileService fileService;
 
-    @RequestMapping("/uploadFile")
+    @RequestMapping(value = "/uploadFile",method = RequestMethod.POST)
     public void uploadFile(@RequestParam("file") CommonsMultipartFile file, HttpServletResponse response){
         String fileName = file.getOriginalFilename();
         try {
