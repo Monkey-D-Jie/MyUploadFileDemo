@@ -37,10 +37,11 @@
 <div style="width: 500px;height: auto;margin: 3px 3px 3px 3px;">
     <table class="gridtable" style="width: 490px;">
         <tr>
-            <td align="right" width="100px">单图片上传</td>
+            <td align="right" width="100px">单文件上传</td>
             <td>
-                1、<input type="file" name="file" id="file">
-                <input accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" type="button" value="上传图片"
+                1、<input type="file"  multiple="multiple" name="file" id="file">
+                <%--accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"--%>
+                <input  type="button" value="上传文件"
                        onclick="uploadpic()"></input>
             </td>
         </tr>
@@ -53,10 +54,10 @@
     </table>
 </div>
 
-<div style="width: 500px;height: auto;margin: 3px 3px 3px 3px;" hidden="true">
+<div style="width: 500px;height: auto;margin: 3px 3px 3px 3px;">
     <table class="gridtable" style="width: 490px;">
         <tr>
-            <td align="right" width="100px">批量图片上传</td>
+            <td align="right" width="100px">批量文件上传</td>
             <td>
                 1、<input accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" type="file" name="files" id="files"
                          style="margin-top: 3px;"><span class="img_info1"></span><br/>
@@ -66,7 +67,7 @@
                          style="margin-top: 3px;"><span class="img_info3"></span><br/>
                 4、<input accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" type="file" name="files" id="files"
                          style="margin-top: 3px;"><span class="img_info4"></span><br/>
-                <input type="button" value="批量上传图片" onclick="batchuploadpic()" style="margin-top: 4px;"></input>
+                <input type="button" value="批量上传文件" onclick="batchuploadpic()" style="margin-top: 4px;"></input>
             </td>
         </tr>
         <tr>

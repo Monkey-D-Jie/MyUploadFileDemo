@@ -21,4 +21,16 @@ https://blog.csdn.net/cl799667803/article/details/72730841
   ---在 外部js文件中引入layer.msg时用到的。
   这个时候，如果不把layer作一个全局声明(即 jsp页面下方的layer声明代码)，
   会出现引用不到的情况。
+
+7.SpringMVC+Ajax文件批量上传和下载 - CSDN博客
+  https://blog.csdn.net/u012604367/article/details/50516726
+--分--割----线--
+  文档在线预览的实现
+8.java文档在线预览实现 - CSDN博客
+  https://blog.csdn.net/u010920692/article/details/52879948?locationNum=2&fps=1
+9.Java+FlexPaper+swfTools仿百度文库文档在线预览系统设计与实现 - CSDN博客
+  https://blog.csdn.net/hil2000/article/details/8459940
+
+10.Java判断文件类型 - CSDN博客
+   https://blog.csdn.net/shixing_11/article/details/5708145
 -----------分----割----线-----------------------

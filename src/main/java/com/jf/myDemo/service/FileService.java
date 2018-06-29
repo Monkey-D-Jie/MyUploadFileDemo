@@ -16,6 +16,6 @@ import org.springframework.stereotype.Service;
 public class FileService implements IFileService{
     @Override
     public void addFileInfo(FileInfoBean fileInfoBean) {
-        System.out.println("临时打印：上传到FTP服务器的文件信息:"+fileInfoBean.toString());
+//        System.out.println("临时打印：上传到FTP服务器的文件信息:"+fileInfoBean.toString());
     }
 }

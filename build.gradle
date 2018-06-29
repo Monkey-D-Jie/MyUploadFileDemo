@@ -41,6 +41,10 @@ ext {
      * FTP Client
      */
     conmmonNetversion = '3.3'
+    /**
+     * json version
+     */
+    jsonVersion = '2.4'
 }
 repositories {
     mavenCentral()
@@ -77,7 +81,10 @@ dependencies {
             //jstl--->用于在jsp页面引入‘c’标签,这个jstl是【Home » jstl » jstl » 1.2】
             "jstl:jstl:$jstlVersion",
             //引入 ftpClient 模拟服务器上传和下载文件
-            "commons-net:commons-net:$conmmonNetversion"
+            "commons-net:commons-net:$conmmonNetversion",
+//            "net.sf.json-lib:json-lib:$jsonVersion"
+
+
 
 
 

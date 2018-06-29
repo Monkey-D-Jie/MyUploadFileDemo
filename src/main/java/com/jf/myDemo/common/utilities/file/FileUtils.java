@@ -4,12 +4,16 @@ import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.net.FileNameMap;
+import java.net.URLConnection;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,12 +27,18 @@ import java.util.List;
 public class FileUtils {
     private static int offset = 149;
     private static String enCodeStr = "utf-8";
+    private static Logger LOGGER = LoggerFactory.getLogger(FileUtils.class.getName());
 
-    //获取文件类型
-    public static final HashMap<String, String> FILE_TYPE_MAP = new HashMap<String, String>();
+    /**
+     * 获取文件类型
+     */
+    public static final HashMap<String, String> FILE_TYPE_MAP = new HashMap<>(150);
 
     static {
+        getReverseAllFileType();
+    }
 
+    public static void getAllFileType(){
         FILE_TYPE_MAP.put("ffd8ffe000104a464946", "jpg"); //JPEG (jpg)
         FILE_TYPE_MAP.put("89504e470d0a1a0a0000", "png"); //PNG (png)
         FILE_TYPE_MAP.put("47494638396126026f01", "gif"); //GIF (gif)
@@ -75,7 +85,10 @@ public class FileUtils {
         FILE_TYPE_MAP.put("49545346030000006000", "chm");//bat文件
         FILE_TYPE_MAP.put("04000000010000001300", "mxp");//bat文件
         FILE_TYPE_MAP.put("504b0304140006000800", "docx");//docx文件
-        FILE_TYPE_MAP.put("d0cf11e0a1b11ae10000", "wps");//WPS文字wps、表格et、演示dps都是一样的
+        //WPS文字wps、表格et、演示dps都是一样的
+//        FILE_TYPE_MAP.put("d0cf11e0a1b11ae10000", "wps");
+        //ppt
+        FILE_TYPE_MAP.put("d0cf11e0a1b11ae10000", "ppt");
         FILE_TYPE_MAP.put("6431303a637265617465", "torrent");
 
         FILE_TYPE_MAP.put("3c68746d6c20786d6c6e", "htm");//猎聘、智联简历。htm
@@ -90,6 +103,49 @@ public class FileUtils {
         FILE_TYPE_MAP.put("2E7261FD", "ram"); //Real Audio (ram)
     }
 
+    public static void getReverseAllFileType(){
+        //反着来
+        FILE_TYPE_MAP.put("xls", "D0CF11E0");  //MS Word
+        FILE_TYPE_MAP.put("doc", "D0CF11E0");  //MS Excel 注意：word 和 excel的文件头一样
+        FILE_TYPE_MAP.put("ppt", "D0CF11E0");  //ppt
+
+        FILE_TYPE_MAP.put("docx", "504B0304140006000800");  //docx
+        FILE_TYPE_MAP.put("xlsx", "504B0304140006000800");  //xlsx
+        FILE_TYPE_MAP.put("pptx", "504B0304140006000800");  //pptx
+
+        FILE_TYPE_MAP.put("jpg", "FFD8FF"); //JPEG (jpg)
+        FILE_TYPE_MAP.put("png", "89504E47");  //PNG (png)
+        FILE_TYPE_MAP.put("gif", "47494638");  //GIF (gif)
+        FILE_TYPE_MAP.put("tif", "49492A00");  //TIFF (tif)
+        FILE_TYPE_MAP.put("bmp", "424D"); //Windows Bitmap (bmp)
+        FILE_TYPE_MAP.put("dwg", "41433130"); //CAD (dwg)
+        FILE_TYPE_MAP.put("html", "68746D6C3E");  //HTML (html)
+        FILE_TYPE_MAP.put("rtf", "7B5C727466");  //Rich Text Format (rtf)
+        FILE_TYPE_MAP.put("xml", "3C3F786D6C");
+        FILE_TYPE_MAP.put("zip", "504B0304140000000800");
+        FILE_TYPE_MAP.put("rar", "52617221");
+        FILE_TYPE_MAP.put("psd", "38425053");  //Photoshop (psd)
+        FILE_TYPE_MAP.put("eml", "44656C69766572792D646174653A");  //Email [thorough only] (eml)
+        FILE_TYPE_MAP.put("dbx", "CFAD12FEC5FD746F");  //Outlook Express (dbx)
+        FILE_TYPE_MAP.put("pst", "2142444E");  //Outlook (pst)
+
+
+        FILE_TYPE_MAP.put("mdb", "5374616E64617264204A");  //MS Access (mdb)
+        FILE_TYPE_MAP.put("wpd", "FF575043"); //WordPerfect (wpd)
+        FILE_TYPE_MAP.put("eps", "252150532D41646F6265");
+        FILE_TYPE_MAP.put("ps", "252150532D41646F6265");
+        FILE_TYPE_MAP.put("pdf", "255044462D312E");  //Adobe Acrobat (pdf)
+        FILE_TYPE_MAP.put("qdf", "AC9EBD8F");  //Quicken (qdf)
+        FILE_TYPE_MAP.put("pwl", "E3828596");  //Windows Password (pwl)
+        FILE_TYPE_MAP.put("wav", "57415645");  //Wave (wav)
+        FILE_TYPE_MAP.put("avi", "41564920");
+        FILE_TYPE_MAP.put("ram", "2E7261FD");  //Real Audio (ram)
+        FILE_TYPE_MAP.put("rm", "2E524D46");  //Real Media (rm)
+        FILE_TYPE_MAP.put("mpg", "000001BA");  //
+        FILE_TYPE_MAP.put("mov", "6D6F6F76");  //Quicktime (mov)
+        FILE_TYPE_MAP.put("asf", "3026B2758E66CF11"); //Windows Media (asf)
+        FILE_TYPE_MAP.put("mid", "4D546864");  //MIDI (mid)
+    }
     //通过配置文件读取FTP配置
     //暂写死
     private static String ftp_ip = "192.168.51.13";//服务IP
@@ -715,12 +771,22 @@ public class FileUtils {
     /**
      * 获取文件类型
      * ps:流会关闭
-     *
+     *正着来 由文件头编码获取到文件类型
      * @param inputStream
      * @return
      */
     public static String getFileType(InputStream inputStream) {
         return FILE_TYPE_MAP.get(getFileHeader(inputStream));
+    }
+
+    /**
+     * 获取文件的真实类型
+     *反着来：先获得文件类型，然后查看对应文件头信息是否正确
+     * @param inputStream
+     * @return
+     */
+    public static String getFileRealSuffixType(InputStream inputStream) {
+        return getFileSuffixType(inputStream);
     }
 
     public static String getFileHeader(InputStream inputStream) {
@@ -732,7 +798,7 @@ public class FileUtils {
         * int read(byte[] b, int off, int len) 从此输入流中将最多 len 个字节的数据读入一个 byte 数组中。
         */
             inputStream.read(b, 0, b.length);
-            value = bytesToHexString(b);
+            value = bytesToHexString(b).toLowerCase();
         } catch (Exception e) {
         } finally {
             if (null != inputStream) {
@@ -742,7 +808,31 @@ public class FileUtils {
                 }
             }
         }
-        return value.toLowerCase();
+        LOGGER.info("***********************上传文件的文件头为："+value);
+        return value;
+    }
+
+    public static String getFileSuffixType(InputStream inputStream) {
+        String value = null;
+        try {
+            byte[] b = new byte[10];
+        /*int read() 从此输入流中读取一个数据字节。
+        *int read(byte[] b) 从此输入流中将最多 b.length 个字节的数据读入一个 byte 数组中。
+        * int read(byte[] b, int off, int len) 从此输入流中将最多 len 个字节的数据读入一个 byte 数组中。
+        */
+            inputStream.read(b, 0, b.length);
+            value = getFileTypeByStream(b);
+        } catch (Exception e) {
+        } finally {
+            if (null != inputStream) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                }
+            }
+        }
+        LOGGER.info("***********************上传文件的文件真实类型为："+value);
+        return value;
     }
 
     /**
@@ -766,6 +856,62 @@ public class FileUtils {
             builder.append(hv);
         }
         return builder.toString();
+    }
+
+    /**
+     * Created on 2010-7-2
+     * <p>Discription:[isImage,判断文件是否为图片]</p>
+     * @param file
+     * @return true 是 | false 否
+     * @author:[shixing_11@sina.com]
+     */
+    public static final boolean isImage(File file){
+        boolean flag = false;
+        try
+        {
+            BufferedImage bufreader = ImageIO.read(file);
+            int width = bufreader.getWidth();
+            int height = bufreader.getHeight();
+            if(width==0 || height==0){
+                flag = false;
+            }else {
+                flag = true;
+            }
+        }
+        catch (IOException e)
+        {
+            flag = false;
+        }catch (Exception e) {
+            flag = false;
+        }
+        return flag;
+    }
+
+    /**
+     * Created on 2010-7-1
+     * <p>Discription:[getFileTypeByStream]</p>
+     * @param b
+     * @return fileType
+     * @author:[shixing_11@sina.com]
+     */
+    public final static String getFileTypeByStream(byte[] b)
+    {
+        String filetypeHex = String.valueOf(bytesToHexString(b));
+        Iterator<Map.Entry<String, String>> entryiterator = FILE_TYPE_MAP.entrySet().iterator();
+        while (entryiterator.hasNext()) {
+            Map.Entry<String,String> entry =  entryiterator.next();
+            String fileTypeHexValue = entry.getValue();
+            if (filetypeHex.toUpperCase().startsWith(fileTypeHexValue)) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
+    public static String getMimeType(String fileUrl) throws java.io.IOException {
+        FileNameMap fileNameMap = URLConnection.getFileNameMap();
+        String type = fileNameMap.getContentTypeFor(fileUrl);
+        return type;
     }
 
     public static void main(String[] agrs) {
