@@ -44,6 +44,7 @@ public class OfficeSingletonUtil {
                     // 端口号--默认也是8100端口
                     //在多个端口上开启libreOffice的进程，并设置其任务最大执行时间和等待最长时间为90s
                     configuration.setPortNumbers(ports);
+                    configuration.setConnectTimeout(20000);
                     //         设置任务执行超时为10分钟
                     configuration.setTaskExecutionTimeout(1000 * 60 * 25L);
                     //         设置任务队列超时为24小时

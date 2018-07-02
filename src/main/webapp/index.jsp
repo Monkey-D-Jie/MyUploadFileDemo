@@ -59,13 +59,14 @@
         <tr>
             <td align="right" width="100px">批量文件上传</td>
             <td>
-                1、<input accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" type="file" name="files" id="files"
+                <%--accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"--%>
+                1、<input  type="file" name="files" id="files"
                          style="margin-top: 3px;"><span class="img_info1"></span><br/>
-                2、<input accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" type="file" name="files" id="files"
+                2、<input  type="file" name="files" id="files"
                          style="margin-top: 3px;"><span class="img_info2"></span><br/>
-                3、<input accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" type="file" name="files" id="files"
+                3、<input  type="file" name="files" id="files"
                          style="margin-top: 3px;"><span class="img_info3"></span><br/>
-                4、<input accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" type="file" name="files" id="files"
+                4、<input  type="file" name="files" id="files"
                          style="margin-top: 3px;"><span class="img_info4"></span><br/>
                 <input type="button" value="批量上传文件" onclick="batchuploadpic()" style="margin-top: 4px;"></input>
             </td>

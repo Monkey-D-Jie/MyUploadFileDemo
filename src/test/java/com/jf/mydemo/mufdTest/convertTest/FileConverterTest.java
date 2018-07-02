@@ -4,14 +4,16 @@ import com.jf.myDemo.common.utilities.office.OfficeHomeUtil;
 import com.jf.myDemo.convert.converterUtils.MyLibreOfficeConverter;
 import com.jf.myDemo.convert.converterUtils.MyOpenOfficeConverter;
 import com.jf.myDemo.convert.converterUtils.OfficeSingletonUtil;
+import org.apache.commons.io.FileUtils;
 import org.artofsolving.jodconverter.office.OfficeManager;
 import org.jodconverter.office.LocalOfficeManager;
 import org.jodconverter.office.OfficeException;
 import org.junit.Test;
 
-import java.io.File;
+import java.io.*;
+import java.nio.channels.FileChannel;
+import java.nio.file.Files;
 import java.util.concurrent.CountDownLatch;
-import java.util.zip.DataFormatException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -33,7 +35,6 @@ public class FileConverterTest {
     private String openPdfDir = "E:\\Users\\openOffice\\2Pdf\\";
 
 
-
     private CountDownLatch countDownLatch = new CountDownLatch(8);
 
     private LocalOfficeManager localOfficeManager = null;
@@ -50,21 +51,21 @@ public class FileConverterTest {
     }
 
     @Test
-    public void fileConverTest() throws DataFormatException {
+    public void fileConverTest() throws Exception {
         /**
          * 常规转换测试
          */
         File resFile = new File("E:\\Users\\WordFiles\\test-docx.docx");
 //        File pdfFile = new File(libreHtmlDir+"testDocx-pdf.pdf");
-        File pdfFile = new File(openPdfDir+"testDocx-pdf.pdf");
+        File pdfFile = new File(librePdfDir + "testDocx-pdf.pdf");
 
-        MyOpenOfficeConverter.convertFile(resFile,pdfFile);
-//        MyLibreOfficeConverter.convertFile(resFile,pdfFile);
+//        MyOpenOfficeConverter.convertFile(resFile,pdfFile);
+        MyLibreOfficeConverter.convertFile(resFile, pdfFile);
         /*Pdf2htmlEXUtil.pdf2html("D:\\Temp\\pdf2html\\pdf2htmlEX.exe",openHtmlDir+"testDocx-pdf.pdf",libreHtmlDir,"testDocx-pdf.html");*/
     }
 
     @Test
-    public void libreFileConvertTest() throws DataFormatException, OfficeException {
+    public void libreFileConvertTest() throws OfficeException {
         /**
          * 多线程场景测试-libreOffice
          */
@@ -76,7 +77,7 @@ public class FileConverterTest {
                     File pdfFile = new File(librePdfDir + "testDocx-pdf.pdf");
                     try {
                         MyLibreOfficeConverter.convertFileThread(resFile, pdfFile);
-                    } catch (DataFormatException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                     countDownLatch.countDown();
@@ -87,7 +88,7 @@ public class FileConverterTest {
                 File pdfFile = new File(librePdfDir + "testDoc-pdf.pdf");
                 try {
                     MyLibreOfficeConverter.convertFileThread(resFile, pdfFile);
-                } catch (DataFormatException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 countDownLatch.countDown();
@@ -97,7 +98,7 @@ public class FileConverterTest {
                 File pdfFile = new File(librePdfDir + "testPpt-pdf.pdf");
                 try {
                     MyLibreOfficeConverter.convertFileThread(resFile, pdfFile);
-                } catch (DataFormatException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 countDownLatch.countDown();
@@ -107,7 +108,7 @@ public class FileConverterTest {
                 File pdfFile = new File(librePdfDir + "testPptx-pdf.pdf");
                 try {
                     MyLibreOfficeConverter.convertFileThread(resFile, pdfFile);
-                } catch (DataFormatException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 countDownLatch.countDown();
@@ -117,7 +118,7 @@ public class FileConverterTest {
                 File pdfFile = new File(librePdfDir + "testXls-pdf.pdf");
                 try {
                     MyLibreOfficeConverter.convertFileThread(resFile, pdfFile);
-                } catch (DataFormatException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 countDownLatch.countDown();
@@ -127,7 +128,7 @@ public class FileConverterTest {
                 File pdfFile = new File(librePdfDir + "testXlsx-pdf.pdf");
                 try {
                     MyLibreOfficeConverter.convertFileThread(resFile, pdfFile);
-                } catch (DataFormatException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 countDownLatch.countDown();
@@ -137,7 +138,7 @@ public class FileConverterTest {
                 File pdfFile = new File(librePdfDir + "testTxt-pdf.pdf");
                 try {
                     MyLibreOfficeConverter.convertFileThread(resFile, pdfFile);
-                } catch (DataFormatException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 countDownLatch.countDown();
@@ -147,7 +148,7 @@ public class FileConverterTest {
                 File pdfFile = new File(librePdfDir + "test大docx-pdf.pdf");
                 try {
                     MyLibreOfficeConverter.convertFileThread(resFile, pdfFile);
-                } catch (DataFormatException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 countDownLatch.countDown();
@@ -169,7 +170,7 @@ public class FileConverterTest {
     }
 
     @Test
-    public void openFileConvertTest() throws DataFormatException, OfficeException {
+    public void openFileConvertTest() throws Exception, OfficeException {
         /**
          * 多线程场景测试-libreOffice
          */
@@ -181,7 +182,7 @@ public class FileConverterTest {
                     File pdfFile = new File(openPdfDir + "testDocx-pdf.pdf");
                     try {
                         MyOpenOfficeConverter.convertFileThread(resFile, pdfFile);
-                    } catch (DataFormatException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                     countDownLatch.countDown();
@@ -192,7 +193,7 @@ public class FileConverterTest {
                 File pdfFile = new File(openPdfDir + "testDoc-pdf.pdf");
                 try {
                     MyOpenOfficeConverter.convertFileThread(resFile, pdfFile);
-                } catch (DataFormatException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 countDownLatch.countDown();
@@ -202,7 +203,7 @@ public class FileConverterTest {
                 File pdfFile = new File(openPdfDir + "testPpt-pdf.pdf");
                 try {
                     MyOpenOfficeConverter.convertFileThread(resFile, pdfFile);
-                } catch (DataFormatException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 countDownLatch.countDown();
@@ -212,7 +213,7 @@ public class FileConverterTest {
                 File pdfFile = new File(openPdfDir + "testPptx-pdf.pdf");
                 try {
                     MyOpenOfficeConverter.convertFileThread(resFile, pdfFile);
-                } catch (DataFormatException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 countDownLatch.countDown();
@@ -222,7 +223,7 @@ public class FileConverterTest {
                 File pdfFile = new File(openPdfDir + "testXls-pdf.pdf");
                 try {
                     MyOpenOfficeConverter.convertFileThread(resFile, pdfFile);
-                } catch (DataFormatException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 countDownLatch.countDown();
@@ -232,7 +233,7 @@ public class FileConverterTest {
                 File pdfFile = new File(openPdfDir + "testXlsx-pdf.pdf");
                 try {
                     MyOpenOfficeConverter.convertFileThread(resFile, pdfFile);
-                } catch (DataFormatException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 countDownLatch.countDown();
@@ -242,7 +243,7 @@ public class FileConverterTest {
                 File pdfFile = new File(openPdfDir + "testTxt-pdf.pdf");
                 try {
                     MyOpenOfficeConverter.convertFileThread(resFile, pdfFile);
-                } catch (DataFormatException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 countDownLatch.countDown();
@@ -252,7 +253,7 @@ public class FileConverterTest {
                 File pdfFile = new File(openPdfDir + "test大docx-pdf.pdf");
                 try {
                     MyOpenOfficeConverter.convertFileThread(resFile, pdfFile);
-                } catch (DataFormatException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 countDownLatch.countDown();
@@ -270,6 +271,73 @@ public class FileConverterTest {
             e.printStackTrace();
         } finally {
             MyOpenOfficeConverter.getLocalOfficeManager().stop();
+        }
+    }
+
+    @Test
+    public void fileNameTest() {
+        String name = "temp.docx";
+        System.out.println(name.substring(name.lastIndexOf(".")));
+    }
+
+    @Test
+    public void fileAvailableTest() throws IOException {
+        File inputFile = new File("E:\\Users\\WordFiles\\test-大docx.docx");
+        File tempFile = new File("F:\\MyFtpServer\\temp\\temp-channel.docx");
+        File tempFile2 = new File("F:\\MyFtpServer\\temp\\temp2-stream.docx");
+        File tempFile3 = new File("F:\\MyFtpServer\\temp\\temp3-java7-files.docx");
+        File tempFile4 = new File("F:\\MyFtpServer\\temp\\temp4-apache-commonsIO.docx");
+//        copyFileUsingFileChannels(inputFile,tempFile);
+        copyFileUsingStream(inputFile,tempFile2);
+//        copyFileUsingJava7Files(inputFile,tempFile3);
+//        copyFileUsingApacheCommonsIO(inputFile,tempFile4);
+    }
+
+    private static void copyFileUsingJava7Files(File source, File dest)
+            throws IOException {
+        Files.copy(source.toPath(), dest.toPath());
+    }
+
+    private static void copyFileUsingStream(File source, File dest){
+        InputStream fis = null;
+        FileOutputStream fos = null;
+        try {
+            fis = new FileInputStream(source);
+            fos = new FileOutputStream(dest);
+            //生成本地的临时文件
+            byte[] fileBuffer = new byte[10240];
+            int length = 0;
+            while ((length = fis.read(fileBuffer, 0, fileBuffer.length)) != -1) {
+//                fos.write(fileBuffer);
+                fos.write(fileBuffer,0,length);
+            }
+        }catch (Exception e){
+            try{
+                fis.close();
+                fos.close();
+            }catch (Exception e1){
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    private static void copyFileUsingApacheCommonsIO(File source, File dest)
+            throws IOException {
+        FileUtils.copyFile(source, dest);
+    }
+
+
+    private static void copyFileUsingFileChannels(File source, File dest) throws IOException {
+        FileChannel inputChannel = null;
+        FileChannel outputChannel = null;
+        try {
+            inputChannel = new FileInputStream(source).getChannel();
+            outputChannel = new FileOutputStream(dest).getChannel();
+            outputChannel.transferFrom(inputChannel, 0, inputChannel.size());
+        } finally {
+            inputChannel.close();
+            outputChannel.close();
         }
     }
 }

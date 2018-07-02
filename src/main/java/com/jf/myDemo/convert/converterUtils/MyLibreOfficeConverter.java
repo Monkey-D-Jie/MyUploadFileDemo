@@ -12,7 +12,6 @@ import org.artofsolving.jodconverter.office.OfficeManager;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.zip.DataFormatException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -33,12 +32,14 @@ public class MyLibreOfficeConverter {
     }
 
     private static volatile OfficeManager officeManager = null;
+    //, 8005, 8006----->
+    private static final int[] libreOfficePort = {8004};
 
-    private static final int[] libreOfficePort = {8004, 8005, 8006};
+    private static File outPutFile = null;
 
     public static void convertFile(File inputfile, File outputfile) {
         String LibreOffice_HOME = OfficeHomeUtil.getLibreOfficeHome();
-        System.out.println("-------------获取到的LibreOffice_HOME---->>>" + LibreOffice_HOME);
+        System.out.println("-------------获取到的LibreOffice_HOME---->>>" + LibreOffice_HOME+"********inputfile的大小:"+inputfile.length());
         String fileName = inputfile.getName();
         logger.info(new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new Date()) + "文件" + inputfile.getName());
         System.out.println(fileName.substring(fileName.lastIndexOf(".")));
@@ -71,13 +72,12 @@ public class MyLibreOfficeConverter {
             e.printStackTrace();
             logger.info("转换失败");
         } finally {
-            System.out.println("*****************---officeManager关闭了---*****************");
-            officeManager.stop();
+//            System.out.println("*****************---officeManager关闭了---*****************");
+//            officeManager.stop();
         }
-
         logger.info(new Date().toString() + "----转换结束....");
     }
-    public static void convertFileThread(File inputFile, File outFile) throws DataFormatException {
+    public static void convertFileThread(File inputFile, File outFile){
         try {
             synchronized (MyLibreOfficeConverter.class) {
                 if (officeManager == null) {

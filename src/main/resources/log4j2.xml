@@ -6,10 +6,10 @@
         <!--配置日志文件输出目录-->
         <property name="LOG_HOME">F:/myIdeaWorkSpace/MyUploadFileDemo/logs</property>
         <!--输出文件名称-->
-        <property name="FILE_NAME_DEBUG">OpenOfficeDemo-debug</property>
-        <property name="FILE_NAME_INFO">OpenOfficeDemo-info</property>
-        <property name="FILE_NAME_WARN">OpenOfficeDemo-warn</property>
-        <property name="FILE_NAME_ERROR">OpenOfficeDemo-error</property>
+        <property name="FILE_NAME_DEBUG">MyUploadFileDemo-debug</property>
+        <property name="FILE_NAME_INFO">MyUploadFileDemo-info</property>
+        <property name="FILE_NAME_WARN">MyUploadFileDemo-warn</property>
+        <property name="FILE_NAME_ERROR">MyUploadFileDemo-error</property>
         <!--日志输出级别-->
         <property name="LOG_LEVEL">debug</property>
     </properties>

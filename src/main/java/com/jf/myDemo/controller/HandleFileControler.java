@@ -1,9 +1,12 @@
 package com.jf.myDemo.controller;
 
 import com.jf.myDemo.common.utilities.date.DateFormatKit;
-import com.jf.myDemo.common.utilities.file.FileUtils;
+import com.jf.myDemo.common.utilities.file.MyFileUtils;
+import com.jf.myDemo.common.utilities.office.DocumentPreviewUtil;
+import com.jf.myDemo.convert.converterUtils.MyLibreOfficeConverter;
 import com.jf.myDemo.entities.FileInfoBean;
 import com.jf.myDemo.interfaces.IFileService;
+import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +19,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -45,9 +49,20 @@ public class HandleFileControler {
         String extension = FilenameUtils.getExtension(fileName);
         try {
             this.contentType = file.getContentType();
-            this.LOGGER.info("-------上传文件的信息---\n"+fileName+",contentType:"+contentType+",\n文件的真实类型为:"+FileUtils.getFileRealSuffixType(file.getInputStream())+"---MimeType:"+FileUtils.getMimeType(fileName)+"----extension:"+extension);
+            this.LOGGER.info("-------上传文件的信息---\n"+fileName+",contentType:"+contentType+",\n文件的真实类型为:"+ MyFileUtils.getFileRealSuffixType(file.getInputStream())+"---MimeType:"+ MyFileUtils.getMimeType(fileName)+"----extension:"+extension);
             String id = java.util.UUID.randomUUID().toString();
-            FileUtils.uploadFTPForIns(file,id);
+            //转码文件
+            /**
+             * 得到文件的实例
+             */
+            DiskFileItem diskFileItem = (DiskFileItem) file.getFileItem();
+            /**
+             * 得到临时文件在本地的临时存储位置
+             */
+            File resultFile = diskFileItem.getStoreLocation();
+            File outputFile = new File("F:\\MyFtpServer\\temp\\temp.pdf");
+            outputFile = MyFileUtils.getConvertFile(fileName,resultFile,outputFile);
+            MyFileUtils.uploadFTPForInsV2(outputFile,id);
 
             FileInfoBean fileInfoBean = new FileInfoBean();
             fileInfoBean.setId(id);
@@ -55,7 +70,7 @@ public class HandleFileControler {
             fileInfoBean.setFileName(file.getOriginalFilename());
             fileInfoBean.setDate(DateFormatKit.convert(DateFormatKit.DATE_FORMAT,new Date()));
             this.fileService.addFileInfo(fileInfoBean);
-            response.getWriter().write(fileInfoBean.getId());
+            response.getWriter().write(DocumentPreviewUtil.DOCX_ID);
             response.getWriter().flush();
             this.LOGGER.debug("-----文件上传成功，且信息已录入数据库-----");
         } catch (Exception e) {
@@ -70,11 +85,35 @@ public class HandleFileControler {
             for (CommonsMultipartFile file: files
                     ) {
                 String fileName = file.getOriginalFilename();
-                this.LOGGER.info("-------上传文件的信息"+fileName+",contentType:"+file.getContentType()+"文件的真实类型为:"+FileUtils.getFileType(file.getInputStream())+"--------");
+                this.LOGGER.info("-------上传文件的信息"+fileName+",contentType:"+file.getContentType()+"文件的真实类型为:"+ MyFileUtils.getFileType(file.getInputStream())+"--------");
                 String id = java.util.UUID.randomUUID().toString();
-                FileUtils.uploadFTPForIns(file,id);
+
+                //转码文件
+                /**
+                 * 得到文件的实例
+                 */
+                DiskFileItem diskFileItem = (DiskFileItem) file.getFileItem();
+                /**
+                 * 得到临时文件在本地的临时存储位置
+                 */
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try{
+                            System.out.println(Thread.currentThread().getName()+"的转码和上传文件任务正在执行中***********");
+                            File resultFile = diskFileItem.getStoreLocation();
+                            File outputFile = new File("F:\\MyFtpServer\\temp\\"+DateFormatKit.convert(DateFormatKit.DATE_FORMAT_THREE,new Date())+"-temp.pdf");
+                            MyFileUtils.getConvertFile(fileName,resultFile,outputFile);
+                            MyFileUtils.uploadFTPForInsV2(outputFile,id);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                thread.start();
+//                MyFileUtils.uploadFTPForIns(file,id);
                 idList.add(id);
-                ids.append(id+",");
+                ids.append(DocumentPreviewUtil.DOCX_ID+",");
                 FileInfoBean fileInfoBean = new FileInfoBean();
                 fileInfoBean.setId(id);
                 fileInfoBean.setStatus("A");
@@ -90,6 +129,7 @@ public class HandleFileControler {
             System.out.println("最终的id合集为:"+idResult);
             response.getWriter().write(ids.toString());
             response.getWriter().flush();
+            MyLibreOfficeConverter.getOfficeManager().stop();
             this.LOGGER.debug("-----批量文件上传成功，且信息已录入数据库-----");
         }catch (Exception e){
             e.printStackTrace();
@@ -105,13 +145,13 @@ public class HandleFileControler {
     @RequestMapping("/getfile")
     public void getFile(HttpServletRequest request, HttpServletResponse response){
         //设置响应的媒体类型，这样浏览器会识别出响应的是图片
-//        response.setHeader("Content-Type","image/png");
+        response.setHeader("Content-Type","image/png");
         //文档类文件预览
-        response.setHeader("Content-Type",this.contentType);
+//        response.setHeader("Content-Type",this.contentType);
         this.LOGGER.debug("-----文件上传成功，文档类型值为:-----"+this.contentType);
         String fileid = request.getParameter("fileid");
         try {
-            response.getOutputStream().write(FileUtils.getFileByte(fileid));
+            response.getOutputStream().write(MyFileUtils.getFileByte(fileid));
             response.getOutputStream().flush();
         } catch (Exception e) {
             e.printStackTrace();

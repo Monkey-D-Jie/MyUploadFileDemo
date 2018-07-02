@@ -1,5 +1,6 @@
 package com.jf.myDemo.common.utilities.file;
 
+import com.jf.myDemo.convert.converterUtils.MyLibreOfficeConverter;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
@@ -24,10 +25,10 @@ import java.util.*;
  * To change this template use File | Settings | File and Templates.
  */
 
-public class FileUtils {
+public class MyFileUtils {
     private static int offset = 149;
     private static String enCodeStr = "utf-8";
-    private static Logger LOGGER = LoggerFactory.getLogger(FileUtils.class.getName());
+    private static Logger LOGGER = LoggerFactory.getLogger(MyFileUtils.class.getName());
 
     /**
      * 获取文件类型
@@ -252,6 +253,53 @@ public class FileUtils {
                 c.setFileType(FTP.BINARY_FILE_TYPE);
             }
             InputStream input = file.getInputStream();
+            boolean b2 = c.storeFile(encoding(id, enCodeStr, "iso-8859-1"), input);
+            input.close();
+            c.logout();
+        } catch (IOException e) {
+            throw new Exception("未能连接上Ftp服务器！");
+        } finally {
+            if (c.isConnected()) {
+                try {
+                    c.disconnect();
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
+                }
+            }
+        }
+        return re;
+    }
+
+    public static int uploadFTPForInsV2(File file, String id) throws Exception {
+        int re = 0;
+        FTPClient c = new FTPClient();
+        int reply;
+        try {
+            //链接ftp服务
+            c.connect(ftp_ip, ftp_port);
+            //登陆
+            boolean b = c.login(ftp_user, ftp_password);
+            if (!b) {
+                throw new Exception("登陆FTP不成功！");
+            }
+            reply = c.getReplyCode();
+            if (!FTPReply.isPositiveCompletion(reply)) {
+                c.disconnect();
+            }
+            c.changeWorkingDirectory(ftp_upload);
+
+            if (file.getName().endsWith(".eh") || file.getName().endsWith(".wf") || file.getName().endsWith(".txt")) {
+                c.setFileType(FTP.ASCII_FILE_TYPE);
+            } else {
+                c.setFileType(FTP.BINARY_FILE_TYPE);
+            }
+            FileInputStream fis = new FileInputStream(file);
+            InputStream input = new InputStream() {
+                @Override
+                public int read() throws IOException {
+                    return fis.read();
+                }
+            };
             boolean b2 = c.storeFile(encoding(id, enCodeStr, "iso-8859-1"), input);
             input.close();
             c.logout();
@@ -912,6 +960,46 @@ public class FileUtils {
         FileNameMap fileNameMap = URLConnection.getFileNameMap();
         String type = fileNameMap.getContentTypeFor(fileUrl);
         return type;
+    }
+
+    public static synchronized File getConvertFile(String fileName,File inputFile,File outPutFile){
+        FileInputStream fis = null;
+        FileOutputStream fos = null;
+        File tempFile = null;
+        if(inputFile != null){
+            try{
+                    tempFile = new File("F:\\MyFtpServer\\temp\\tempFile"+fileName.substring(fileName.indexOf(".")));
+                    if(!outPutFile.exists()){
+                        outPutFile.createNewFile();
+                    }
+                    tempFile.createNewFile();
+                    MyCopyFileUtils.copyFileUsingFileChannels(inputFile,tempFile);
+                    LOGGER.info("本地临时文件已生成，临时文件所在目录---->>>"+tempFile.getPath()+"");
+                    //转换该文件
+                    System.out.println("*************转换后文件的大小为:"+tempFile.length());
+                    MyLibreOfficeConverter.convertFile(tempFile,outPutFile);
+            }catch(FileNotFoundException e){
+                e.printStackTrace();
+            }catch (IOException e){
+                e.printStackTrace();
+            } finally{
+                try{
+                    if(fis != null && fos != null){
+                        fis.close();
+                        fos.close();
+                    }
+                    if(tempFile != null){
+                        //删除掉临时文件
+//                        tempFile.delete();
+                    }
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }else{
+            LOGGER.info("***********************传入的文件不合法！");
+        }
+        return outPutFile;
     }
 
     public static void main(String[] agrs) {

@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="Gradle : com.jf.myDemo : OpenOfficeDemo-1.0-SNAPSHOT.war (exploded)">
-    <output-path>$PROJECT_DIR$/build/libs/exploded/OpenOfficeDemo-1.0-SNAPSHOT.war</output-path>
+  <artifact type="exploded-war" name="Gradle : com.jf.myDemo : MyUploadFileDemo-1.0-SNAPSHOT.war (exploded)">
+    <output-path>$PROJECT_DIR$/build/libs/exploded/MyUploadFileDemo-1.0-SNAPSHOT.war</output-path>
     <properties id="gradle-properties">
       <options external-project-path="$PROJECT_DIR$">
         <manifest>TWFuaWZlc3QtVmVyc2lvbjogMS4wDQoNCg==</manifest>
@@ -8,47 +8,47 @@
     </properties>
     <root id="root">
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/build/libs/exploded/OpenOfficeDemo-1.0-SNAPSHOT.war/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/build/libs/exploded/MyUploadFileDemo-1.0-SNAPSHOT.war/META-INF/MANIFEST.MF" />
       </element>
-      <element id="javaee-facet-resources" facet="OpenOfficeDemo_main/web/Web Gradle : OpenOfficeDemo-1.0-SNAPSHOT.war" />
+      <element id="javaee-facet-resources" facet="MyUploadFileDemo_main/web/Web Gradle : MyUploadFileDemo-1.0-SNAPSHOT.war" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
-          <element id="module-output" name="OpenOfficeDemo_main" />
+          <element id="module-output" name="MyUploadFileDemo_main" />
           <element id="dir-copy" path="$PROJECT_DIR$/build/resources/main" />
         </element>
         <element id="directory" name="lib">
-          <element id="file-copy" path="$PROJECT_DIR$/libs/jodconverter-core-3.0-alfresco-patched-20141024.jar" />
           <element id="library" level="project" name="Gradle: org.jodconverter:jodconverter-local:4.2.0" />
-          <element id="library" level="project" name="Gradle: org.apache.logging.log4j:log4j-api:2.6.2" />
-          <element id="library" level="project" name="Gradle: org.apache.logging.log4j:log4j-core:2.6.2" />
-          <element id="library" level="project" name="Gradle: org.apache.logging.log4j:log4j-web:2.6.2" />
-          <element id="library" level="project" name="Gradle: org.apache.logging.log4j:log4j-slf4j-impl:2.6.2" />
-          <element id="library" level="project" name="Gradle: org.slf4j:slf4j-api:1.7.25" />
-          <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.7.3" />
           <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.7.3" />
           <element id="library" level="project" name="Gradle: org.springframework:spring-context:4.3.14.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-core:4.3.14.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-web:4.3.14.RELEASE" />
           <element id="library" level="project" name="Gradle: org.springframework:spring-webmvc:4.3.14.RELEASE" />
           <element id="library" level="project" name="Gradle: org.springframework:spring-test:4.3.14.RELEASE" />
           <element id="library" level="project" name="Gradle: javax.servlet:javax.servlet-api:3.1.0" />
           <element id="library" level="project" name="Gradle: javax.servlet.jsp:jsp-api:2.2" />
           <element id="library" level="project" name="Gradle: commons-fileupload:commons-fileupload:1.2.1" />
           <element id="library" level="project" name="Gradle: jstl:jstl:1.2" />
+          <element id="library" level="project" name="Gradle: commons-net:commons-net:3.3" />
           <element id="library" level="project" name="Gradle: org.jodconverter:jodconverter-core:4.2.0" />
           <element id="library" level="project" name="Gradle: org.openoffice:juh:4.1.2" />
           <element id="library" level="project" name="Gradle: org.openoffice:jurt:4.1.2" />
           <element id="library" level="project" name="Gradle: org.openoffice:ridl:4.1.2" />
           <element id="library" level="project" name="Gradle: org.openoffice:unoil:4.1.2" />
+          <element id="library" level="project" name="Gradle: org.slf4j:slf4j-api:1.7.25" />
           <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.7.0" />
+          <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.7.3" />
           <element id="library" level="project" name="Gradle: org.springframework:spring-aop:4.3.14.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-beans:4.3.14.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-core:4.3.14.RELEASE" />
           <element id="library" level="project" name="Gradle: org.springframework:spring-expression:4.3.14.RELEASE" />
-          <element id="library" level="project" name="Gradle: commons-logging:commons-logging:1.2" />
           <element id="library" level="project" name="Gradle: commons-io:commons-io:2.6" />
           <element id="library" level="project" name="Gradle: org.apache.commons:commons-lang3:3.7" />
           <element id="library" level="project" name="Gradle: com.google.code.gson:gson:2.8.2" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-beans:4.3.14.RELEASE" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-net/commons-net/3.3/cd0d5510908225f76c5fe5a3f1df4fa44866f81e/commons-net-3.3.jar" />
+          <element id="library" level="project" name="Gradle: commons-logging:commons-logging:1.2" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/jodconverter-core-3.0-alfresco-patched-20141024.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-api/2.6.2/bd1b74a5d170686362091c7cf596bbc3adf5c09b/log4j-api-2.6.2.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-core/2.6.2/a91369f655eb1639c6aece5c5eb5108db18306/log4j-core-2.6.2.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-web/2.6.2/99fc279cdf020a4b75a4f94d996646b86da4fd7b/log4j-web-2.6.2.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-slf4j-impl/2.6.2/71d6c56133e0548e07434add048d7a7a2db53512/log4j-slf4j-impl-2.6.2.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework/spring-web/4.3.14.RELEASE/a0c3bf3ad661db185675bd5af350f35ed11f0903/spring-web-4.3.14.RELEASE.jar" />
         </element>
       </element>
     </root>
