@@ -27,7 +27,7 @@
     <!--引入静态文件-->
     <mvc:resources mapping="/resources/images/**" location="/resources/images" cache-period="31556926"/>
     <mvc:resources mapping="/static/js/**" location="/static/js/" cache-period="31556926"/>
-    <!--<mvc:resources mapping="/css/**" location="/css/" cache-period="31556926"/>-->
+    <mvc:resources mapping="static/js/layui/css/**" location="static/js/layui/css/" cache-period="31556926"/>
 
 
     <!--API接口跨域配置-->

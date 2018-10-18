@@ -6,7 +6,7 @@ function uploadpic() {
         content: "",//忽略icon和text的值，直接在加载框中显示此值
         mask: true//是否显示遮罩效果，默认显示
     });
-    // $("body").mLoading("show");
+    $("body").mLoading("show");
     var formData = new FormData();
     formData.append("file", document.getElementById("file").files[0]);
     $.ajax({
@@ -18,13 +18,15 @@ function uploadpic() {
         contentType: false,
         processData: false,
         success: function (data) {
-            showPic(data, ".myimg");
             $("body").mLoading("hide");//隐藏loading组件
-            layer.msg("上传成功！");
+            showPic(data, ".myimg");
+            layer.msg("上传任务已经开启...完成后会通知您的噢(#^.^#)");
         },
         error: function () {
             alert("上传失败");
+            $("body").mLoading("hide");//隐藏loading组件
         }
+
     });
 
 }
@@ -51,7 +53,6 @@ function batchuploadpic() {
         }
         formData.append("files", filesObj[i].files[0]);
     }
-
     $.ajax({
         contentType: "multipart/form-data",//必须要
         // url: "/citys/slide/batchfile.do",
@@ -75,13 +76,13 @@ function batchuploadpic() {
                 }
             }
             $("body").mLoading("hide");//隐藏loading组件
-            layer.msg("上传成功");
+            layer.msg("上传任务已经开启...完成后会通知您的噢(#^.^#)");
         },
         error: function () {
             alert("上传失败");
+            $("body").mLoading("hide");//隐藏loading组件
         }
     });
-
 }
 
 //展示头像

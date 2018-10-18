@@ -33,7 +33,6 @@ public class OfficeSingletonUtil {
         }
         return singletonOpen;
     }
-
     public static OfficeManager getLibreOfficeSingleton(String url, int[] ports) {
         if (singletonLibre == null) {
             synchronized (OfficeSingletonUtil.class) {

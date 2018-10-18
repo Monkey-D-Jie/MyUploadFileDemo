@@ -40,7 +40,6 @@
             <td align="right" width="100px">单文件上传</td>
             <td>
                 1、<input type="file"  multiple="multiple" name="file" id="file">
-                <%--accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"--%>
                 <input  type="button" value="上传文件"
                        onclick="uploadpic()"></input>
             </td>
@@ -53,7 +52,13 @@
         </tr>
     </table>
 </div>
-
+<div id="log-container" style="height: 100%; overflow-y: scroll; background: #333; color: #aaa; padding: 10px;">
+    <div>
+        <div class="layui-progress layui-progress-big" lay-showPercent="yes">
+            <div class="layui-progress-bar layui-bg-blue" lay-percent="50%"></div>
+        </div>
+    </div>
+</div>
 <div style="width: 500px;height: auto;margin: 3px 3px 3px 3px;">
     <table class="gridtable" style="width: 490px;">
         <tr>
@@ -92,7 +97,10 @@
                 </div>
             </td>
         </tr>
-    </table>
+    </table><br/>
+    上传进度：<progress></progress><br/>
+    <p id="progress">0 bytes</p>
+    <p id="info"></p>
 </div>
 </body>
 <!-- 引入自定义的js -->
@@ -104,6 +112,30 @@
         version: false, //一般用于更新组件缓存，默认不开启。设为true即让浏览器不缓存。也可以设为一个固定的值，如：201610
         debug: false, //用于开启调试模式，默认false，如果设为true，则JS模块的节点会保留在页面
         base: '' //设定扩展的Layui组件的所在目录，一般用于外部组件扩展
+    });
+//    这里用来作webSocket接收数据的测试
+    $(document).ready(function() {
+        // 指定websocket路径
+        var websocket = new WebSocket('ws://localhost:8080/ws');
+        websocket.onmessage = function(event) {
+            // 接收服务端的实时日志并添加到HTML页面中
+            $("#log-container div").append(event.data + "<p> </p>");
+            // 滚动条滚动到最低部
+            $("#log-container").scrollTop($("#log-container div").height() - $("#log-container").height());
+            layer.open({
+                title: '文件上传结果',
+                content: '亲，文件已经成功上传咯喔 (*^▽^*)',
+                offset: 'rb',
+                icon: 1,
+                btn: '我知道了',
+                btnAlign: 'c',
+                shade :0,
+                time: 5000,
+                anim: 2,
+                closeBtn: 0
+            });
+
+        };
     });
 </script>
 </html>

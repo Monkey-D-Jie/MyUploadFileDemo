@@ -856,7 +856,6 @@ public class MyFileUtils {
                 }
             }
         }
-        LOGGER.info("***********************上传文件的文件头为："+value);
         return value;
     }
 
@@ -879,7 +878,6 @@ public class MyFileUtils {
                 }
             }
         }
-        LOGGER.info("***********************上传文件的文件真实类型为："+value);
         return value;
     }
 
@@ -962,35 +960,32 @@ public class MyFileUtils {
         return type;
     }
 
-    public static synchronized File getConvertFile(String fileName,File inputFile,File outPutFile){
+    public static synchronized File converAndUploadFile(String fileName, File inputFile, File outPutFile){
         FileInputStream fis = null;
         FileOutputStream fos = null;
-        File tempFile = null;
         if(inputFile != null){
             try{
-                    tempFile = new File("F:\\MyFtpServer\\temp\\tempFile"+fileName.substring(fileName.indexOf(".")));
                     if(!outPutFile.exists()){
                         outPutFile.createNewFile();
                     }
-                    tempFile.createNewFile();
-                    MyCopyFileUtils.copyFileUsingFileChannels(inputFile,tempFile);
-                    LOGGER.info("本地临时文件已生成，临时文件所在目录---->>>"+tempFile.getPath()+"");
                     //转换该文件
-                    System.out.println("*************转换后文件的大小为:"+tempFile.length());
-                    MyLibreOfficeConverter.convertFile(tempFile,outPutFile);
+                    MyLibreOfficeConverter.convertFileThread(inputFile,outPutFile);
+                    //转换完了后上传转码文件
+                    String id = java.util.UUID.randomUUID().toString();
+                    MyFileUtils.uploadFTPForInsV2(outPutFile,id);
+                    //文件上传完成后，入库更新
+
             }catch(FileNotFoundException e){
                 e.printStackTrace();
             }catch (IOException e){
                 e.printStackTrace();
-            } finally{
+            } catch(Exception e){
+                e.printStackTrace();
+            }finally{
                 try{
                     if(fis != null && fos != null){
                         fis.close();
                         fos.close();
-                    }
-                    if(tempFile != null){
-                        //删除掉临时文件
-//                        tempFile.delete();
                     }
                 }catch (IOException e){
                     e.printStackTrace();

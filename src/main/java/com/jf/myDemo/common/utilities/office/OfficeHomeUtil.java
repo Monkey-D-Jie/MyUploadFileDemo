@@ -46,7 +46,7 @@ public class OfficeHomeUtil {
             return "/opt/openOffice 4.1.5/program/soffice";
         } else if (Pattern.matches("Windows.*", osName)) {
             //获取windows系统下libreoffice主程序的位置
-            logger.info("获取windows系统LibreOffice路径");
+//            logger.info("获取windows系统LibreOffice路径");
             return "D:/Software/OpenOffice/OpenOffice4.1.5_Install";
         }
         return null;

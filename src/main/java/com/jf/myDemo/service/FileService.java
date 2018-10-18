@@ -2,7 +2,13 @@ package com.jf.myDemo.service;
 
 import com.jf.myDemo.entities.FileInfoBean;
 import com.jf.myDemo.interfaces.IFileService;
+import com.jf.myDemo.mapper.IFileInfoMapper;
+import com.jf.myDemo.mapper.IUserMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,8 +20,25 @@ import org.springframework.stereotype.Service;
  */
 @Service("fileService")
 public class FileService implements IFileService{
+
+    @Autowired
+    private IFileInfoMapper fileInfoMapper;
+    @Autowired
+    private IUserMapper userMapper;
+
     @Override
     public void addFileInfo(FileInfoBean fileInfoBean) {
-//        System.out.println("临时打印：上传到FTP服务器的文件信息:"+fileInfoBean.toString());
+        this.fileInfoMapper.insertFileInfo(fileInfoBean);
+    }
+
+    @Override
+    public void getUserCount() {
+        System.out.println("**********************************");
+        Map<String,Object> parameterMap = new HashMap<>(2);
+        parameterMap.put("sexid", 1);
+        parameterMap.put("usercount", -1);
+        System.out.println("调用存储过程获取到的数据信息为:"+this.userMapper.getUserCount(parameterMap));
+        System.out.println("**********************************");
+
     }
 }

@@ -18,4 +18,5 @@ public interface IFileService {
      * @param fileInfoBean
      */
     void addFileInfo(FileInfoBean fileInfoBean);
+    void getUserCount();
 }

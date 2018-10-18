@@ -10,7 +10,6 @@ import org.artofsolving.jodconverter.office.OfficeException;
 import org.artofsolving.jodconverter.office.OfficeManager;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -39,9 +38,7 @@ public class MyLibreOfficeConverter {
 
     public static void convertFile(File inputfile, File outputfile) {
         String LibreOffice_HOME = OfficeHomeUtil.getLibreOfficeHome();
-        System.out.println("-------------获取到的LibreOffice_HOME---->>>" + LibreOffice_HOME+"********inputfile的大小:"+inputfile.length());
         String fileName = inputfile.getName();
-        logger.info(new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new Date()) + "文件" + inputfile.getName());
         System.out.println(fileName.substring(fileName.lastIndexOf(".")));
         if (fileName.substring(fileName.lastIndexOf(".")).equalsIgnoreCase(".txt")) {
             try {
@@ -63,7 +60,7 @@ public class MyLibreOfficeConverter {
 //         设置任务队列超时为24小时
         OfficeManager officeManager = configuration.buildOfficeManager();
         officeManager.start();
-        logger.info(new Date().toString() + "----开始转换......");
+        logger.info(new Date().toString() + "---"+inputfile.getName()+"----开始转换......");
         OfficeDocumentConverter converter = new OfficeDocumentConverter(officeManager);
         converter.getFormatRegistry();
         try {
