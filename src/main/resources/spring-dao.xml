@@ -64,12 +64,12 @@
         <!--<property name="dataSource" ref="dynamicLoadBean"/>-->
         <property name="dataSource" ref="dataSource"/>
         <!--引入纳入管理的xml文件-->
-        <property name="typeAliasesPackage" value="com.jf.myDemo.entities"/>
+        <property name="typeAliasesPackage" value="com.jf.demo.entities"/>
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
         <property name="mapperLocations" value="classpath:mapper/**/**/*.xml"/>
     </bean>
     <!--通过扫描的模式，扫描在mybatisDao目录下的所有接口-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.jf.myDemo.mapper"/>
+        <property name="basePackage" value="com.jf.demo.mapper"/>
     </bean>
 </beans>
